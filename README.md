@@ -1,3 +1,26 @@
+# 运行方式
+```shell
+# clone仓库到本地, 打开 kbqa-jena/
+git clone https://github.com/hhqx/kbqa-jena.git
+cd kbqa-jena
+
+
+# 利用docker创建容器和镜像
+
+# 基于当前文件夹下的dockfile创建镜像: kbqa:v1.0
+docker build -t kbqa:v1.0 .
+# 基于镜像 kbqa:v1.0 创建容器, 指定后台运行容器, 指定容器名为kqba-v1.0, 绑定到容器的80端口到主机的8090端口
+docker run -deteach -p 8090:80 --interactive --tty --name kqba-v0.1 kbqa:v1.0
+# 进入容器kbqa:v1.0内部的命令行
+docker exec -ti kqba-v0.1 bash
+```
+最后访问本机: http://localhost:8090/
+
+
+
+以下是原readme.md
+
+----
 # 上手教程
 如果对相关概念不是很了解，建议可以先看看该代码配套的[知乎专栏](https://zhuanlan.zhihu.com/knowledgegraph)系列文章。
 
