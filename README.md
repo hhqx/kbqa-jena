@@ -16,8 +16,15 @@ docker exec -ti kqba-v0.1 bash
 ```
 最后访问本机: http://localhost:8090/
 
+----
+对于ubuntu服务器, 添加端口映射, 将69服务器8090端口暴露到校园网环境下后, 访问: http://10.184.17.45:39990/
+```shell
+# NAT端口转换(重定向), 端口39990转发到8090
+sudo iptables -t nat -A PREROUTING -p tcp --dport 39990 -j REDIRECT --to-ports 8090
 
+```
 
+----
 以下是原readme.md
 
 ----
