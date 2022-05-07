@@ -11,13 +11,20 @@ cd kbqa-jena
 docker build -t kbqa:v1.0 .
 # 基于镜像 kbqa:v1.0 创建容器, 指定后台运行容器, 指定容器名为kqba-v1.0, 绑定到容器的80端口到主机的8090端口
 docker run -deteach -p 8090:80 --interactive --tty --name kqba-v0.1 kbqa:v1.0
-# 进入容器kbqa:v1.0内部的命令行
-docker exec -ti kqba-v0.1 bash
+# 进入容器kbqa:v1.0内部的命令行, (可不执行)
+# docker exec -ti kqba-v0.1 bash
 ```
 最后访问本机: http://localhost:8090/
 
+----
+对于ubuntu服务器, 添加端口映射, 将69服务器8090端口暴露到校园网环境下后, 访问: http://10.184.17.45:39990/
+```shell
+# NAT端口转换(重定向), 端口39990转发到8090
+sudo iptables -t nat -A PREROUTING -p tcp --dport 39990 -j REDIRECT --to-ports 8090
 
+```
 
+----
 以下是原readme.md
 
 ----

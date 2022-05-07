@@ -18,8 +18,6 @@ RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pip --upgrade
 ADD . /kbqa
 WORKDIR /kbqa
 
-# 安装python环境依赖包
-RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ && rm -rf ~/.cache/pip
 
 # 执行dos2unix转换
 RUN find /kbqa/jena/apache-jena-3.5.0/bin/ | xargs dos2unix \
@@ -28,12 +26,18 @@ RUN find /kbqa/jena/apache-jena-3.5.0/bin/ | xargs dos2unix \
     && dos2unix /kbqa/jena/apache-jena-fuseki-3.5.0/fuseki-server
 
 # 将nt格式的三元组数据以tdb(rdf格式)进行存储
+RUN ["chmod", "+x", "/kbqa/jena/apache-jena-3.5.0/bin/tdbloader"]
 RUN /kbqa/jena/apache-jena-3.5.0/bin/tdbloader --loc="/kbqa/jena/tdb" "/kbqa/kg_demo_movie.nt"
 
-# 设置环境变量
+# # 设置环境变量
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 STREAMLIT_SERVER_PORT=80 FUSEKI_HOME=/kbqa/jena/apache-jena-fuseki-3.5.0
 
 EXPOSE 80
 
-# 启动kbqa
+# 安装python环境依赖包
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ && rm -rf ~/.cache/pip
+
+
+# # 启动kbqa
+RUN ["chmod", "+x", "./start.sh"]
 CMD ["./start.sh"]
